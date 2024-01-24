@@ -1,6 +1,7 @@
 
-import React,{useEffect,useState} from 'react';
+import React,{useCallback, useEffect,useMemo,useState} from 'react';
 import './App.css';
+import Trial from './component/trial';
 
 // Do not change this
 const LARGE_NUMBER = 1000000000;
@@ -15,17 +16,20 @@ function App() {
 
 
   // should not change the LOGIC inside this function - you can make changes to the function but logic should NOT change
-  const delayFunction = ()=> {
+  const delayFunction = useMemo(()=> {
     console.log("Delay Function Ran")
     for(let index=0; index<LARGE_NUMBER; index++){};
+    console.log("hi")
     return value+2;
-  
-  }
+  },[value])
 
   // should not change the LOGIC inside this function - you can make changes to the function but logic should NOT change
-  const testFunction = ()=>{
+
+  const testFunction = useCallback(()=>{
+    console.log("hell")
     return [value*3 ,value*4]
-  }
+
+  },[value])
 
   
 
@@ -69,13 +73,15 @@ function App() {
       <h1 >{value}</h1>
       <button onClick={handleChangeValue}>Change Value</button>
       <button onClick={handleList}>Show List</button>
-      <h2>{delayFunction()}</h2>
+      <h2>{delayFunction}</h2>
       <div>
         {currentList.map((item,index)=>{
           return <h2 key={index}>{item}</h2>
         })}
 
       </div>
+      
+
     </div>
     
   );
